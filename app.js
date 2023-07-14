@@ -34,7 +34,7 @@ async function filter_data() {
     let final2 = ""
 
     result2.products.filter((values) => {
-        if(values.price > input) {
+        if(values.price < input) {
         final2 += `<tr class="font-family-sans-serif text-center font-monospace">
         <td>${values.id}</td>
         <td>${values.title}</td>
@@ -57,17 +57,29 @@ async function filter_data() {
 
 async function search_data() {
     const response3 = await fetch("https://dummyjson.com/products/");
+    // console.log(response3)
     const result3 = await response3.json();
 
     let input2 = document.getElementById("hold_search").value;
     //console.log(typeof(input2))
 
     let final3 = ""
-
+    // console.log(result3.products)
+    
     result3.products.filter((values) => {
-        //input2.localeCompare(values.id, undefined, { sensitivity: 'accent' });
-        //if(input2.localeCompare(values.id, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.title, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.brand, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.category, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.price, undefined, { sensitivity: 'accent' })){
-        if(input2 == values.id || input2 == values.title || input2 == values.brand || input2 == values.category || input2 == values.price) {
+    //     //input2.localeCompare(values.id, undefined, { sensitivity: 'accent' });
+    //     //if(input2.localeCompare(values.id, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.title, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.brand, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.category, undefined, { sensitivity: 'accent' })||input2.localeCompare(values.price, undefined, { sensitivity: 'accent' })){
+    //     // result3.products.map((value) => {
+    //     //     //console.log(value.columns)
+    //     //     if(input2 == value) {
+        //   console.log(Object.keys(values))
+
+        let new_object = Object.keys(values)
+        new_object.map((value2) => {
+
+        if(input2 == values[value2]) {
+
+    //  if(input2 == values.id || input2 == values.title || input2 == values.brand || input2 == values.category || input2 == values.price) {
         final3 += `<tr class="font-family-sans-serif text-center font-monospace">
         <td>${values.id}</td>
         <td>${values.title}</td>
@@ -79,11 +91,14 @@ async function search_data() {
         <td>${values.stock}</td>
         <td><img src="${values.images[0]}" /></td>
         </tr>`;
+           
         } else {
             return null
         }
-    });
+        })
+     });
     document.getElementById("table_body").innerHTML=final3;
+
   
 
 }
